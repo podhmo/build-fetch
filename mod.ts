@@ -1,5 +1,13 @@
-/** build specialized fetch() utilities  */
+/** Utilities for building specialised fetch() */
+
+/** The type for fetch() */
 export type Fetch = typeof globalThis.fetch;
+
+/** The type for specliased version of fetch() */
+export type SpecializedFetch<Path extends string> = (
+  path: Path,
+  init?: Parameters<Fetch>[1],
+) => ReturnType<Fetch>;
 
 function onErrorDefault(response: Response): Error {
   return new Error(
@@ -7,7 +15,7 @@ function onErrorDefault(response: Response): Error {
   );
 }
 
-/** build fetch() for tracing request/rseponse */
+/** Build fetch() for tracing request and response. Currently, it uses console.error to output to stderr. */
 export function withTrace(
   inner: Fetch,
   options?: {
