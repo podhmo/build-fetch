@@ -29,6 +29,7 @@ async function main() {
     console.log(data.slideshow.title);
   }
 
+  // 400
   {
     const url = "https://httpbin.org/status/400";
     console.log("%crequesting...", "color: font-style: italic;");
