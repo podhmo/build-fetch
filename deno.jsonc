@@ -1,4 +1,7 @@
 {
+  "tasks": {
+    "ok": "deno check *.ts && deno test && deno fmt --check && deno lint"
+  },
   "name": "@podhmo/build-fetch",
   "version": "0.1.0",
   "license": "MIT",
