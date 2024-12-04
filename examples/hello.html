@@ -1,68 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja" data-theme="dark">
-
-<head>
+  <head>
     <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- style -->
     <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
     <script type="importmap">
-        {
-            "imports": {
-                "@podhmo/build-fetch": "https://esm.sh/jsr/@podhmo/build-fetch"
-            }
+      {
+        "imports": {
+          "@podhmo/build-fetch": "https://esm.sh/jsr/@podhmo/build-fetch"
         }
+      }
     </script>
 
     <style type="text/css">
-        .padding-element {
-            padding: 1rem;
-        }
+      .padding-element {
+        padding: 1rem;
+      }
 
-        .wrap {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
+      .wrap {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <main class="container">
-        <h1>withTrace example with esm.sh</h1>
-        <button id="btn">fetch readme</button>
-        <pre id="result" class="padded-element wrap"></pre>
+      <h1>withTrace example with esm.sh</h1>
+      <button id="btn">fetch readme</button>
+      <pre id="result" class="padded-element wrap"></pre>
     </main>
 
     <script type="module">
-        import { withTrace } from "@podhmo/build-fetch";
-        const fetch = withTrace(window.fetch)
+      import { withTrace } from "@podhmo/build-fetch";
+      const fetch = withTrace(window.fetch);
 
-        export async function onClick(ev) {
-            ev.preventDefault();
+      export async function onClick(ev) {
+        ev.preventDefault();
 
-            const el = document.getElementById("result");
-            el.style.backgroundColor = "";
-            const url = "https://raw.githubusercontent.com/podhmo/build-fetch/refs/heads/main/README.md";
-            el.textContent = `fetching ${url} ...`;
-            try {
-                const res = await fetch(url, { "method": "GET" });
-                const text = await res.text();
-                // wait
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+        const el = document.getElementById("result");
+        el.style.backgroundColor = "";
+        const url =
+          "https://raw.githubusercontent.com/podhmo/build-fetch/refs/heads/main/README.md";
+        el.textContent = `fetching ${url} ...`;
+        try {
+          const res = await fetch(url, { "method": "GET" });
+          const text = await res.text();
+          // wait
+          await new Promise((resolve) => setTimeout(resolve, 1000));
 
-                el.textContent = text;
-                el.style.backgroundColor = "#ffe";
-            } catch (err) {
-                el.textContent = err.message;
-                el.style.backgroundColor = "#fcc";
-            }
+          el.textContent = text;
+          el.style.backgroundColor = "#ffe";
+        } catch (err) {
+          el.textContent = err.message;
+          el.style.backgroundColor = "#fcc";
         }
+      }
 
-        document.getElementById("btn").addEventListener("click", onClick);
+      document.getElementById("btn").addEventListener("click", onClick);
     </script>
-</body>
-
+  </body>
 </html>

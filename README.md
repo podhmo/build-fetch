@@ -9,7 +9,7 @@ https://jsr.io/@podhmo/build-help
 withTrace
 
 ```ts
-import { withTrace } from "jsr:@podhmo/build-fetch"
+import { withTrace } from "jsr:@podhmo/build-fetch";
 
 const fetch = withTrace(globalThis.fetch);
 const response = await fetch("https://httpbin.org/status/200");
