@@ -20,6 +20,7 @@ export function withTrace(
   inner: Fetch,
   options?: {
     onError?: (response: Response) => Error;
+    disabled?: boolean | (() => boolean);
     skipConsumeBody?: boolean;
   },
 ): Fetch {
@@ -27,12 +28,24 @@ export function withTrace(
   if (options.onError === undefined) {
     options.onError = onErrorDefault;
   }
+
+  let disabled: () => boolean;
+  if (typeof options.disabled === "function") {
+    disabled = options.disabled;
+  } else {
+    disabled = () => !!options.disabled;
+  }
   const skipConsumeBody = options.skipConsumeBody ?? false;
 
   return async function fetchWithTrace(
     url: Parameters<Fetch>[0],
     init?: Parameters<Fetch>[1],
   ) {
+    // skip tracing if disabled
+    if (disabled()) {
+      return await inner(url, init);
+    }
+
     const headers = init?.headers as Record<string, string> ?? {};
 
     // trace request to stderr
@@ -57,7 +70,6 @@ export function withTrace(
         throw onErrorDefault(response);
       } else {
         // TODO: skip binary response
-
         console.error({ response, text: await response.text() });
         throw onErrorDefault(response);
       }
