@@ -1,4 +1,4 @@
-import { SpecializedFetch } from "../mod.ts";
+import type { SpecializedFetch } from "../mod.ts";
 
 const baseUrl = "https://httpbin.org";
 const endpoints = [
