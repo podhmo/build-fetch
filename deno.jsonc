@@ -1,6 +1,6 @@
 {
-    "name": "@podhmo/build-help",
-    "version": "0.1.0",
-    "license": "MIT",
-    "exports": "./mod.ts"  
+  "name": "@podhmo/build-help",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./mod.ts"
 }
