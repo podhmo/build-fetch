@@ -8,12 +8,16 @@ function onErrorDefault(response: Response): Error {
 /** build fetch() for tracing request/rseponse */
 export function withTrace(
   inner: Fetch,
-  options?: { onError?: (response: Response) => Error },
+  options?: {
+    onError?: (response: Response) => Error;
+    skipBody?: boolean;
+  },
 ): Fetch {
   options = options ?? {};
   if (options.onError === undefined) {
     options.onError = onErrorDefault;
   }
+  const skipBody = options.skipBody ?? false;
 
   return async function fetchWithTrace(
     url: Parameters<Fetch>[0],
@@ -28,10 +32,17 @@ export function withTrace(
 
     // trace response to stderr
     if (!response.ok) {
-      console.error({ response, text: await response.text() });
+      if (skipBody) {
+        console.error({ response });
+      } else {
+        // warning: consume the response
+        console.error({ response, text: await response.text() });
+      }
       throw onErrorDefault(response);
     }
-    console.error({ response }); // when it is normal, I don't want to consume the response
+
+    // when it is normal, I don't want to consume the response
+    console.error({ response });
     return response;
   };
 }
