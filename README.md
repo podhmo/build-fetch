@@ -2,7 +2,7 @@
 
 Utilities for building specialised fetch().
 
-https://jsr.io/@podhmo/build-help
+https://jsr.io/@podhmo/build-fetch
 
 ## how to use
 
